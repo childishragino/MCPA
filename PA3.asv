@@ -1,0 +1,62 @@
+set(0,'DefaultFigureWindowStyle','docked')
+set(0, 'defaultaxesfontsize', 20)
+set(0, 'defaultaxesfontname', 'Times New Roman')
+set(0, 'DefaultLineLineWidth',2);
+
+clear all
+close all
+
+x = 0; % electron x position
+v = 0; % electron velocity
+t = 0; % time passed
+
+F = 1; % Force experienced
+m = 1; % electron mass
+np = 1;
+dt = 1;
+steps = 100;
+
+v=zeros(n)
+x=zeros();
+
+re = 0; % rebound behaviour
+
+for i = 2:steps
+    r(i) = t(i-1) + dt;
+    v(:,i) = v(:, i-1) + F/m*dt;
+    x(:,i) = x(:, i-1) + v(:, i-1)*dt + F/m*dt^2/2;
+    
+    r = rand(np,1) < 0.05;
+    v(r,i) = re*v(r,i);
+    average_v(i,:) = mean(v,2);
+    
+    subplot(3,1,1)
+    plot(t,v,'-');
+    hold on
+    subplot(3,1,1)
+    plot(t,average_v,'g*');
+    hold off
+    xlabel('time')
+    ylabel('v')
+    title(['Average v:' num2str(average_v(i))])
+    
+    subplot(3,1,2)
+    plot(x(1,:),v(1,:),'r-');
+    hold on
+    subplot(3,1,2)
+    plot(x(1,:),average_v(1,:),'g*');
+    hold off
+    xlabel('x')
+    ylabel('v')    
+
+    subplot(3,1,3)
+    plot(t,x,'-');
+    xlabel('time')
+    ylabel('x')
+    
+    pause(0.01)
+end
+
+display('Average V')
+mean(v)
+
